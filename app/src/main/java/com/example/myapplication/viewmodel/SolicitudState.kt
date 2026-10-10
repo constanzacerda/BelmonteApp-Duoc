@@ -1,0 +1,55 @@
+package com.example.myapplication.viewmodel
+
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.myapplication.model.Viaje
+import com.example.myapplication.network.RetrofitClient
+import kotlinx.coroutines.launch
+
+sealed class SolicitudState {
+    object Idle : SolicitudState()
+    object Loading : SolicitudState()
+    object Success : SolicitudState()
+    data class Error(val message: String) : SolicitudState()
+}
+
+class SolicitudViewModel : ViewModel() {
+
+    var nombre by mutableStateOf("")
+    var origen by mutableStateOf("")
+    var destino by mutableStateOf("")
+    var vuelo by mutableStateOf("")
+    var fecha by mutableStateOf("")
+    var hora by mutableStateOf("")
+    var fotoUri by mutableStateOf<String?>(null)
+
+
+    var state by mutableStateOf<SolicitudState>(SolicitudState.Idle)
+        private set
+
+    fun enviarSolicitud() {
+        viewModelScope.launch {
+            state = SolicitudState.Loading
+            try {
+
+                val nuevoViaje = Viaje(
+                    nombrePasajero = nombre,
+                    fecha = fecha,
+                    hora = hora,
+                    direccionOrigen = origen,
+                    direccionDestino = destino,
+                    numeroVuelo = vuelo.ifBlank { null },
+                    fotoRefUri = fotoUri
+                )
+
+                RetrofitClient.apiService.enviarSolicitud(nuevoViaje)
+                state = SolicitudState.Success
+            } catch (e: Exception) {
+                state = SolicitudState.Error("Error al enviar: ${e.localizedMessage}")
+            }
+        }
+    }
+}
