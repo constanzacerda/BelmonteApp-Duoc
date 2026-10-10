@@ -8,13 +8,13 @@ import com.example.myapplication.model.Usuario
 
 class LoginViewModel: ViewModel() {
 
-    // USUARIO CORRECTO PARA VALIDAR LOGIN
+
     val usuarioCorrecto = Usuario(
         "admin",
         "123"
     )
 
-    // ESTADOS DE LA PANTALLA
+
     var mail by mutableStateOf("")
     var pass by mutableStateOf("")
 

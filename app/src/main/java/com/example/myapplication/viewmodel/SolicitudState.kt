@@ -17,7 +17,6 @@ sealed class SolicitudState {
 }
 
 class SolicitudViewModel : ViewModel() {
-
     var nombre by mutableStateOf("")
     var origen by mutableStateOf("")
     var destino by mutableStateOf("")
@@ -27,14 +26,29 @@ class SolicitudViewModel : ViewModel() {
     var fotoUri by mutableStateOf<String?>(null)
 
 
+    var intentoEnviar by mutableStateOf(false)
+        private set
+
     var state by mutableStateOf<SolicitudState>(SolicitudState.Idle)
         private set
 
+
+    fun isValid(): Boolean {
+        return nombre.isNotBlank() && origen.isNotBlank() &&
+                destino.isNotBlank() && fecha.isNotBlank() && hora.isNotBlank()
+    }
+
     fun enviarSolicitud() {
+        intentoEnviar = true
+
+        if (!isValid()) {
+            state = SolicitudState.Error("Por favor, completa los campos en rojo.")
+            return
+        }
+
         viewModelScope.launch {
             state = SolicitudState.Loading
             try {
-
                 val nuevoViaje = Viaje(
                     nombrePasajero = nombre,
                     fecha = fecha,
@@ -44,7 +58,6 @@ class SolicitudViewModel : ViewModel() {
                     numeroVuelo = vuelo.ifBlank { null },
                     fotoRefUri = fotoUri
                 )
-
                 RetrofitClient.apiService.enviarSolicitud(nuevoViaje)
                 state = SolicitudState.Success
             } catch (e: Exception) {
