@@ -17,7 +17,7 @@ import kotlinx.coroutines.delay
 @Composable
 fun SplashScreen(onSplashFinished: () -> Unit) {
     LaunchedEffect(Unit) {
-        delay(2000) // 2 segundos de animación/carga
+        delay(2000)
         onSplashFinished()
     }
     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
