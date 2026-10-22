@@ -46,4 +46,10 @@ interface ViajeDao {
     @androidx.room.Delete
     suspend fun eliminarViaje(viaje: ViajeEntity)
 
+    @Query("SELECT * FROM viajes WHERE estado = 'PENDIENTE'")
+    fun obtenerViajesPendientes(): Flow<List<ViajeEntity>>
+
+    @Query("UPDATE viajes SET estado = 'ASIGNADO' WHERE id = :viajeId")
+    suspend fun asignarViaje(viajeId: String)
+
 }
