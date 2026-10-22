@@ -1,0 +1,64 @@
+<resources>
+    <string name="app_name">Belmonte Traslados</string>
+
+
+    <string name="gps_permiso_titulo">Permiso de Ubicación</string>
+    <string name="gps_permiso_mensaje">Belmonte Traslados necesita acceder a su ubicación para mostrar la distancia a los destinos y habilitar la navegación GPS hacia los puntos de recogida y entrega.</string>
+    <string name="gps_permiso_aceptar">Permitir</string>
+    <string name="gps_permiso_rechazar">Ahora no</string>
+    <string name="gps_activo">GPS activo</string>
+    <string name="gps_inactivo">GPS inactivo</string>
+    <string name="gps_pendiente">GPS pendiente</string>
+    <string name="gps_necesario">GPS necesario para navegación</string>
+    <string name="gps_sin_permiso">Debe otorgar permiso de ubicación para usar el GPS</string>
+
+
+    <string name="navegar">Navegar</string>
+    <string name="navegar_destino">Navegar al destino</string>
+    <string name="navegar_sin_app">No se encontró app de navegación. Se abrirá el navegador.</string>
+    <string name="sincronizar">Sincronizar</string>
+    <string name="sincronizando">Sincronizando GPS y API…</string>
+
+
+    <string name="panel_conductor">Panel del Conductor</string>
+    <string name="belmonte_traslados">Belmonte Traslados</string>
+    <string name="acceso_conductor">Acceso Conductor</string>
+    <string name="usuario">Usuario</string>
+    <string name="contrasena">Contraseña</string>
+    <string name="ingresar">Ingresar</string>
+    <string name="credenciales_invalidas">Credenciales inválidas. Use: conductor / 123</string>
+    <string name="datos_ficticios">Datos ficticios - MVP Educativo</string>
+
+
+    <string name="estado_pendiente">Pendiente</string>
+    <string name="estado_asignado">Asignado</string>
+    <string name="estado_en_curso">En Curso</string>
+    <string name="estado_finalizado">Finalizado</string>
+    <string name="estado_todos">Todos</string>
+    <string name="completado">Completado</string>
+
+
+    <string name="asignar">Asignar</string>
+    <string name="iniciar">Iniciar</string>
+    <string name="finalizar">Finalizar</string>
+    <string name="no_hay_viajes">No hay viajes para mostrar</string>
+
+
+    <string name="seleccione_perfil">Seleccione su perfil</string>
+    <string name="soy_pasajero">Soy Pasajero</string>
+    <string name="soy_conductor">Soy Conductor</string>
+    <string name="solicitar_traslado">Solicitar un traslado corporativo</string>
+    <string name="ver_viajes">Ver mis viajes asignados</string>
+    <string name="transporte_corporativo">Transporte Corporativo</string>
+
+
+    <string name="api_conectada">API conectada</string>
+    <string name="modo_offline">Modo sin conexión</string>
+    <string name="sincronizacion_exitosa">Sincronización exitosa con el servidor</string>
+    <string name="sin_conexion_servidor">Sin conexión al servidor, usando datos locales</string>
+
+
+    <string name="distancia_formato">Distancia: %.1f km</string>
+    <string name="origen">Origen</string>
+    <string name="destino">Destino</string>
+</resources>
