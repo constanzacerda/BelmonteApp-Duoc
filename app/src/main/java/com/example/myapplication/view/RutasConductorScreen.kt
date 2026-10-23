@@ -559,39 +559,27 @@ fun TarjetaViaje(
 }
 
 fun abrirNavegacion(context: Context, viaje: ViajeEntity) {
-    val lat = viaje.latitudDestino
-    val lng = viaje.longitudDestino
+    val origen = if (viaje.latitudOrigen != 0.0) "${viaje.latitudOrigen},${viaje.longitudOrigen}" else Uri.encode(viaje.direccionOrigen)
+    val destino = if (viaje.latitudDestino != 0.0) "${viaje.latitudDestino},${viaje.longitudDestino}" else Uri.encode(viaje.direccionDestino)
 
-    if (lat == 0.0 && lng == 0.0) {
-        val direccion = Uri.encode(viaje.direccionDestino)
-        val intent = Intent(Intent.ACTION_VIEW, Uri.parse("google.navigation:q=$direccion"))
-        intent.setPackage("com.google.android.apps.maps")
+    val uriMaps = Uri.parse("https://www.google.com/maps/dir/?api=1&origin=$origen&destination=$destino&travelmode=driving")
+    val mapIntent = Intent(Intent.ACTION_VIEW, uriMaps)
+    mapIntent.setPackage("com.google.android.apps.maps")
 
-        if (intent.resolveActivity(context.packageManager) != null) {
-            context.startActivity(intent)
-        } else {
-            Toast.makeText(context, "No se encontró app de navegación. Se abrirá el navegador.", Toast.LENGTH_SHORT).show()
-            context.startActivity(
-                Intent(Intent.ACTION_VIEW, Uri.parse("https://www.google.com/maps/search/?api=1&query=$direccion"))
-            )
-        }
+    if (mapIntent.resolveActivity(context.packageManager) != null) {
+        context.startActivity(mapIntent)
     } else {
-        val gmmIntentUri = Uri.parse("google.navigation:q=$lat,$lng&mode=d")
-        val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
-        mapIntent.setPackage("com.google.android.apps.maps")
-
-        if (mapIntent.resolveActivity(context.packageManager) != null) {
-            context.startActivity(mapIntent)
-        } else {
-            try {
-                val wazeIntent = Intent(Intent.ACTION_VIEW, Uri.parse("waze://?ll=$lat,$lng&navigate=yes"))
-                context.startActivity(wazeIntent)
-            } catch (e: Exception) {
-                Toast.makeText(context, "No se encontró app de navegación. Se abrirá el navegador.", Toast.LENGTH_SHORT).show()
-                context.startActivity(
-                    Intent(Intent.ACTION_VIEW, Uri.parse("https://www.google.com/maps/dir/?api=1&destination=$lat,$lng&travelmode=driving"))
-                )
+        try {
+            val uriWaze = if (viaje.latitudDestino != 0.0) {
+                "waze://?ll=${viaje.latitudDestino},${viaje.longitudDestino}&navigate=yes"
+            } else {
+                "waze://?q=${Uri.encode(viaje.direccionDestino)}&navigate=yes"
             }
+            context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(uriWaze)))
+        } catch (e: Exception) {
+            Toast.makeText(context, "No se encontró app de navegación. Abriendo navegador.", Toast.LENGTH_SHORT).show()
+            context.startActivity(Intent(Intent.ACTION_VIEW, uriMaps))
         }
     }
+
 }
